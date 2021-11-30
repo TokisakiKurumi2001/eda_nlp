@@ -56,7 +56,7 @@ if alpha_sr == alpha_ri == alpha_rs == alpha_rd == 0:
      ap.error('At least one alpha should be greater than zero')
 
 #generate more data with standard augmentation
-def gen_eda(train_orig, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9, model='cc.vi.300.bin'):
+def gen_eda(train_orig, model, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_rd, num_aug=9):
 
     writer = open(output_file, 'w')
     lines = open(train_orig, 'r').readlines()
