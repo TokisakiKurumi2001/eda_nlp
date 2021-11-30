@@ -76,4 +76,4 @@ def gen_eda(train_orig, model, output_file, alpha_sr, alpha_ri, alpha_rs, alpha_
 if __name__ == "__main__":
 
     #generate augmented sentences and output into a new file
-    gen_eda(args.input, model=model, output, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
+    gen_eda(args.input, model, output, alpha_sr=alpha_sr, alpha_ri=alpha_ri, alpha_rs=alpha_rs, alpha_rd=alpha_rd, num_aug=num_aug)
