@@ -252,7 +252,7 @@ def add_word(new_words):
 # main data augmentation function
 ########################################################################
 
-def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9, model):
+def eda(sentence, model, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
 	
 	sentence = get_only_chars(sentence)
 	words = sentence.split(' ')
