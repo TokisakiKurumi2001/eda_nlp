@@ -132,15 +132,15 @@ def get_only_chars(line):
 #for the first time you use wordnet
 #import nltk
 #nltk.download('wordnet')
-from nltk.corpus import wordnet 
+# from nltk.corpus import wordnet 
 
-def synonym_replacement(words, n):
+def synonym_replacement(words, n, model):
 	new_words = words.copy()
 	random_word_list = list(set([word for word in words if word not in stop_words]))
 	random.shuffle(random_word_list)
 	num_replaced = 0
 	for random_word in random_word_list:
-		synonyms = get_synonyms(random_word)
+		synonyms = get_synonyms(random_word, model)
 		if len(synonyms) >= 1:
 			synonym = random.choice(list(synonyms))
 			new_words = [synonym if word == random_word else word for word in new_words]
@@ -155,16 +155,26 @@ def synonym_replacement(words, n):
 
 	return new_words
 
-def get_synonyms(word):
-	synonyms = set()
-	for syn in wordnet.synsets(word): 
-		for l in syn.lemmas(): 
-			synonym = l.name().replace("_", " ").replace("-", " ").lower()
-			synonym = "".join([char for char in synonym if char in ' qwertyuiopasdfghjklzxcvbnm'])
-			synonyms.add(synonym) 
-	if word in synonyms:
-		synonyms.remove(word)
-	return list(synonyms)
+import fasttext.util
+def get_synonyms(word, model):
+	ft = fasttext.load_model(model)
+	syns = ft.get_nearest_neighbors(word)
+	result = []
+	for syn in syns:
+		result.append(syn[1].replace("_", " ").replace("-", " ").lower())
+		
+	return result
+
+# def get_synonyms(word):
+# 	synonyms = set()
+# 	for syn in wordnet.synsets(word): 
+# 		for l in syn.lemmas(): 
+# 			synonym = l.name().replace("_", " ").replace("-", " ").lower()
+# 			synonym = "".join([char for char in synonym if char in ' qwertyuiopasdfghjklzxcvbnm'])
+# 			synonyms.add(synonym) 
+# 	if word in synonyms:
+# 		synonyms.remove(word)
+# 	return list(synonyms)
 
 ########################################################################
 # Random deletion
@@ -242,7 +252,7 @@ def add_word(new_words):
 # main data augmentation function
 ########################################################################
 
-def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
+def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9, model):
 	
 	sentence = get_only_chars(sentence)
 	words = sentence.split(' ')
@@ -256,7 +266,7 @@ def eda(sentence, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9)
 	if (alpha_sr > 0):
 		n_sr = max(1, int(alpha_sr*num_words))
 		for _ in range(num_new_per_technique):
-			a_words = synonym_replacement(words, n_sr)
+			a_words = synonym_replacement(words, n_sr, model)
 			augmented_sentences.append(' '.join(a_words))
 
 	#ri
