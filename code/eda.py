@@ -227,18 +227,18 @@ def swap_word(new_words):
 # Randomly insert n words into the sentence
 ########################################################################
 
-def random_insertion(words, n):
+def random_insertion(words, n, ft):
 	new_words = words.copy()
 	for _ in range(n):
-		add_word(new_words)
+		add_word(new_words, ft)
 	return new_words
 
-def add_word(new_words):
+def add_word(new_words, ft):
 	synonyms = []
 	counter = 0
 	while len(synonyms) < 1:
 		random_word = new_words[random.randint(0, len(new_words)-1)]
-		synonyms = get_synonyms(random_word)
+		synonyms = get_synonyms(random_word, ft)
 		counter += 1
 		if counter >= 10:
 			return
@@ -271,7 +271,7 @@ def eda(sentence, ft, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_au
 	if (alpha_ri > 0):
 		n_ri = max(1, int(alpha_ri*num_words))
 		for _ in range(num_new_per_technique):
-			a_words = random_insertion(words, n_ri)
+			a_words = random_insertion(words, n_ri, ft)
 			augmented_sentences.append(' '.join(a_words))
 
 	#rs
