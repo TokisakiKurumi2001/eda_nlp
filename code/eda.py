@@ -120,8 +120,9 @@ def get_only_chars(line):
             clean_line += ' '
 
     clean_line = re.sub(' +',' ',clean_line) #delete extra spaces
-    if clean_line[0] == ' ':
-        clean_line = clean_line[1:]
+    if len(clean_line) > 1:
+	if clean_line[0] == ' ':
+	    clean_line = clean_line[1:]
     return clean_line
 
 ########################################################################
@@ -159,20 +160,11 @@ def get_synonyms(word, ft):
 	syns = ft.get_nearest_neighbors(word)
 	result = []
 	for syn in syns:
-		result.append(syn[1].replace("_", " ").replace("-", " ").lower())
+		w = syn[1].replace("_", " ").replace("-", " ").lower()
+		if w.startswith('a01b01'):
+			result.append(w)
 		
 	return result
-
-# def get_synonyms(word):
-# 	synonyms = set()
-# 	for syn in wordnet.synsets(word): 
-# 		for l in syn.lemmas(): 
-# 			synonym = l.name().replace("_", " ").replace("-", " ").lower()
-# 			synonym = "".join([char for char in synonym if char in ' qwertyuiopasdfghjklzxcvbnm'])
-# 			synonyms.add(synonym) 
-# 	if word in synonyms:
-# 		synonyms.remove(word)
-# 	return list(synonyms)
 
 ########################################################################
 # Random deletion
