@@ -161,7 +161,7 @@ def get_synonyms(word, ft):
 	result = []
 	for syn in syns:
 		w = syn[1].replace("_", " ").replace("-", " ").lower()
-		if not w.startswith('a01b01'):
+		if not (w.startswith('a01b01') or w.startswith('1a61b61') or w.startswith('a1b1')):
 			result.append(w)
 		
 	return result
