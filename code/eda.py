@@ -134,13 +134,13 @@ def get_only_chars(line):
 #nltk.download('wordnet')
 # from nltk.corpus import wordnet 
 
-def synonym_replacement(words, n, model):
+def synonym_replacement(words, n, ft):
 	new_words = words.copy()
 	random_word_list = list(set([word for word in words if word not in stop_words]))
 	random.shuffle(random_word_list)
 	num_replaced = 0
 	for random_word in random_word_list:
-		synonyms = get_synonyms(random_word, model)
+		synonyms = get_synonyms(random_word, ft)
 		if len(synonyms) >= 1:
 			synonym = random.choice(list(synonyms))
 			new_words = [synonym if word == random_word else word for word in new_words]
@@ -155,9 +155,7 @@ def synonym_replacement(words, n, model):
 
 	return new_words
 
-import fasttext.util
-def get_synonyms(word, model):
-	ft = fasttext.load_model(model)
+def get_synonyms(word, ft):
 	syns = ft.get_nearest_neighbors(word)
 	result = []
 	for syn in syns:
@@ -252,7 +250,7 @@ def add_word(new_words):
 # main data augmentation function
 ########################################################################
 
-def eda(sentence, model, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
+def eda(sentence, ft, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num_aug=9):
 	
 	sentence = get_only_chars(sentence)
 	words = sentence.split(' ')
@@ -266,7 +264,7 @@ def eda(sentence, model, alpha_sr=0.1, alpha_ri=0.1, alpha_rs=0.1, p_rd=0.1, num
 	if (alpha_sr > 0):
 		n_sr = max(1, int(alpha_sr*num_words))
 		for _ in range(num_new_per_technique):
-			a_words = synonym_replacement(words, n_sr, model)
+			a_words = synonym_replacement(words, n_sr, ft)
 			augmented_sentences.append(' '.join(a_words))
 
 	#ri
