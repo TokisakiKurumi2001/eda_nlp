@@ -114,7 +114,7 @@ def get_only_chars(line):
     line = line.lower()
 
     for char in line:
-        if char in 'qwertyuiopasdfghjklzxcvbnm ':
+        if char in 'qwertyuiopasdfghjklzxcvbnmăâđêôơư1234567890%.áàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ ':
             clean_line += char
         else:
             clean_line += ' '
