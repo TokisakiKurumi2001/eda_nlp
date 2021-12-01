@@ -114,7 +114,7 @@ def get_only_chars(line):
     line = line.lower()
 
     for char in line:
-        if char in 'qwertyuiopasdfghjklzxcvbnmăâđêôơư1234567890%.áàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ ':
+        if char in 'qwertyuiopasdfghjklzxcvbnmăâđêôơư1234567890%.áàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ.,;[]_+-!@#$%^&*(){}|\/? ':
             clean_line += char
         else:
             clean_line += ' '
@@ -161,7 +161,7 @@ def get_synonyms(word, ft):
 	result = []
 	for syn in syns:
 		w = syn[1].replace("_", " ").replace("-", " ").lower()
-		if not (w.startswith('a01b01') or w.startswith('1a61b61') or w.startswith('a1b1')):
+		if not (w.startswith('a01b01') or w.startswith('1a61b61') or w.startswith('a1b1') or w.startswith('2001a') or w.startswith('21b')):
 			result.append(w)
 		
 	return result
