@@ -161,7 +161,9 @@ def get_synonyms(word, ft):
 	result = []
 	for syn in syns:
 		w = syn[1].replace("_", " ").replace("-", " ").lower()
-		if not (w.startswith('a01b01') or w.startswith('1a61b61') or w.startswith('a1b1') or w.startswith('2001a') or w.startswith('21b')):
+		if not (w.startswith('a01b01') or w.startswith('1a61b61') or w.startswith('a1b1') or w.startswith('2001a') or w.startswith('21b') \
+		       or w.startswith('1a1b') or w.startswith('độngnăm20152014') or w.startswith('7735') or w.startswith('đb0') or w.startswith('nauchnij') \
+		       or w.startswith('l. v.') or w.startswith('33007') ):
 			result.append(w)
 		
 	return result
